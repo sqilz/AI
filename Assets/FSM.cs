@@ -50,7 +50,6 @@ public class FSM : MonoBehaviour {
                 moveGameObject.transform.position = Vector3.MoveTowards(moveGameObject.transform.position, whereToMove, step);
                 
             }
-          
 
             if (Vector3.Angle(moveGameObject.forward, whereToMove) !=0)
             {
@@ -58,7 +57,7 @@ public class FSM : MonoBehaviour {
                 transform.rotation = Quaternion.LookRotation(newDir);
                 rotated = true;
             }
-            Debug.Log(Vector3.Angle(moveGameObject.forward, whereToMove));
+             Debug.Log(Vector3.Angle(moveGameObject.forward, whereToMove));
 
             if (transform.position == whereToMove)
             {
@@ -81,8 +80,13 @@ public class FSM : MonoBehaviour {
 		}
 		else if (Fight) 
 		{
-			// fight
-			if(!enemyIsWeak)
+            GetComponent<Renderer>().material.color = Color.red;
+            // fight
+            Debug.Log(Time.deltaTime);
+
+
+
+            if (!enemyIsWeak)
 			{
                 Fight = false;
 				Flee = true;
