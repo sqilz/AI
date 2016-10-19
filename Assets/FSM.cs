@@ -4,7 +4,7 @@ using System.Collections;
 public class FSM : MonoBehaviour {
 
     Vector3 Lray, RRay;
-   
+    public Transform obj;
     public bool enemyFound;
 	private bool enemyIsWeak;
 	private bool fled;
@@ -48,8 +48,7 @@ public class FSM : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-       
-
+        obj.position = whereToMove;
         Lray = moveGameObject.TransformDirection(a, 0, b);
         RRay = moveGameObject.TransformDirection(c, 0, d);
         // Debug.Log(whereToMove);
@@ -58,21 +57,24 @@ public class FSM : MonoBehaviour {
         Debug.DrawRay(moveGameObject.position, RRay * RayRange, Color.red);
         if (Patrol) 
 		{
-          
+
             if (rotated)
             {
                 moveGameObject.transform.position = Vector3.MoveTowards(moveGameObject.transform.position, whereToMove, step);
-            }
 
-            // checks the angle between the gamobject and the point that it has to move to
-            // for gameobject rotation towards the point
-            if (Vector3.Angle(moveGameObject.forward, whereToMove) !=0)
+            }
+            else
             {
-                Vector3 newDir = Vector3.RotateTowards(moveGameObject.forward, whereToMove, 0.05f, 0.0f);
-                transform.rotation = Quaternion.LookRotation(newDir);
-                rotated = true;
-            }
+                // checks the angle between the gamobject and the point that it has to move to
+                // for gameobject rotation towards the point
+                if (Vector3.Angle(moveGameObject.forward, whereToMove) != 0)
+                {
+                    Vector3 newDir = Vector3.RotateTowards(moveGameObject.forward, whereToMove, 0.05f, 0.0f);
+                    transform.rotation = Quaternion.LookRotation(newDir);
 
+                }
+                else { rotated = true; }
+            }
             // Debug.Log(Vector3.Angle(moveGameObject.forward, whereToMove));
 
             if (transform.position == whereToMove)
